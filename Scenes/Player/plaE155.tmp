@@ -1,0 +1,207 @@
+[gd_scene load_steps=16 format=3 uid="uid://cnb7hhc5d748e"]
+
+[ext_resource type="Script" path="res://Scripts/Player/character_body_2d.gd" id="1_24t3m"]
+[ext_resource type="Texture2D" uid="uid://bw8qeg1ny6xsj" path="res://Sprites/Player_metroid.png" id="2_p1x0x"]
+[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="3_jftfb"]
+[ext_resource type="Script" path="res://Scripts/Player/States/Idle.gd" id="4_gcn08"]
+[ext_resource type="Script" path="res://Scripts/Player/States/Run.gd" id="5_sy3p3"]
+[ext_resource type="Script" path="res://Scripts/Player/States/Jump.gd" id="6_twp1d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vv5hg"]
+radius = 6.0
+height = 24.0
+
+[sub_resource type="Animation" id="Animation_usv4g"]
+resource_name = "Attack_sword"
+length = 0.35
+step = 0.02
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.24, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [17, 18, 19, 20]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.28, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.34),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"stop_attack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_tmy3q"]
+resource_name = "Fall"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [14]
+}
+
+[sub_resource type="Animation" id="Animation_mi54a"]
+resource_name = "Idle"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_ixlfk"]
+resource_name = "Jump"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [12, 13]
+}
+
+[sub_resource type="Animation" id="Animation_jnu4o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ic2h0"]
+resource_name = "Run"
+length = 0.3
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5uw5r"]
+_data = {
+"Attack_sword": SubResource("Animation_usv4g"),
+"Fall": SubResource("Animation_tmy3q"),
+"Idle": SubResource("Animation_mi54a"),
+"Jump": SubResource("Animation_ixlfk"),
+"RESET": SubResource("Animation_jnu4o"),
+"Run": SubResource("Animation_ic2h0")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_44ug3"]
+size = Vector2(13, 20)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_24t3m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+texture = ExtResource("2_p1x0x")
+hframes = 8
+vframes = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_vv5hg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5uw5r")
+}
+
+[node name="Sword" type="Area2D" parent="."]
+position = Vector2(-1, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
+position = Vector2(15, -4)
+shape = SubResource("RectangleShape2D_44ug3")
+debug_color = Color(0.782151, 0.430882, 0.172665, 0.42)
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
+script = ExtResource("3_jftfb")
+current_state = NodePath("Idle")
+animation_player = NodePath("../AnimationPlayer")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("4_gcn08")
+_character = NodePath("../..")
+max_speed = null
+acceleration = null
+turning_acceleration = null
+deceleration = null
+
+[node name="Jump" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_twp1d")
+
+[node name="Run" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("5_sy3p3")

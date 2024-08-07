@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5fr4lgprbiji"]
+
+[ext_resource type="Script" path="res://Scenes/ScreenCamera/ScreenCamera.gd" id="1_2g4pw"]
+
+[node name="ScreenCamera" type="Camera2D"]
+anchor_mode = 0
+zoom = Vector2(2, 2)
+script = ExtResource("1_2g4pw")
