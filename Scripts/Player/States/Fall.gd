@@ -16,6 +16,8 @@ func on_process(delta):
 			change_state("Idle")
 		else:
 			change_state("Run")
+	elif movement_core.get_input()["start_jump"] and movement_core.coyote_timer > 0:
+		change_state("Jump")
 	#elif !movement_core.character.is_on_floor() and movement_core.character.velocity.x != 0: 
 		#change_state("Run")
 

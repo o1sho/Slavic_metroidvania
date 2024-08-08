@@ -17,8 +17,9 @@ var x_dir := 1
 
 # JUMP VARAIABLES ------------------- #
 @export var jump_force = -500
+#@export var max_velY = -1000
 @export var max_jump_time = 0.5  # Максимальное время, в течение которого можно удерживать кнопку прыжка
-@export var jump_boost = 0.3  # Коэффициент увеличения высоты прыжка при удержании
+@export var jump_boost = 2  # Коэффициент увеличения высоты прыжка при удержании
 @export var coyote_time = 0.1  # Время на прыжок после ухода с платформы
 
 var jump_time = 0.0
@@ -85,17 +86,19 @@ func set_direction(hor_direction) -> void:
 
 func jump():
 	character.velocity.y = jump_force
+	jump_time = 0.0
 
 func jump_proces(delta: float) -> void:
 	if get_input()["jump"]:
-		jump_time += delta
 		if jump_time < max_jump_time:
-			character.velocity.y -= jump_boost * delta
-		else:
-			jump_time = 0.0
+			jump_time += delta
+			#print(jump_time)
+			character.velocity.y += jump_boost
+			
 		
 	if get_input()["stop_jump"]:
 		jump_time = 0.0
 
 func coyote_timer_proces(delta: float) -> void:
 	coyote_timer -= delta
+	print(coyote_timer)

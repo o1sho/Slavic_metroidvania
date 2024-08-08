@@ -8,6 +8,7 @@ extends StateMachineState
 func on_enter():
 	print(state_machine.current_state)
 	state_machine.animation_player.play("Run")
+	movement_core.coyote_timer = movement_core.coyote_time
 
 # Called every frame when this state is active.
 func on_process(delta):

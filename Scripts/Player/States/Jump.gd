@@ -34,6 +34,8 @@ func on_process(delta):
 		change_state("Fall")
 	if movement_core.character.is_on_floor():
 		change_state("Idle")
+	if movement_core.get_input()["stop_jump"]:
+		change_state("Fall")
 
 # Called every physics frame when this state is active.
 func on_physics_process(delta):

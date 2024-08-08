@@ -214,9 +214,9 @@ _movement_core = NodePath("../../Cores/MovementCore")
 
 [node name="MovementCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_character")]
 script = ExtResource("8_hhixm")
-max_speed = 150.0
+max_speed = 170.0
 acceleration = 1500.0
-jump_force = -400
-max_jump_time = 1.0
-jump_boost = 450.0
+jump_force = -200
+max_jump_time = 0.16
+jump_boost = -11
 _character = NodePath("../..")
