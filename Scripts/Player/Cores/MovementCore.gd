@@ -27,6 +27,7 @@ var coyote_timer = 0.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") 
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -72,6 +73,7 @@ func x_movement(delta: float) -> void:
 	# Accelerate
 	character.velocity.x += x_dir * accel_rate * delta
 	
+	#if !animationPlayer.current_animation == "Attack_sword":
 	set_direction(x_dir) # This is purely for visuals
 	
 func set_direction(hor_direction) -> void:
@@ -85,8 +87,10 @@ func set_direction(hor_direction) -> void:
 
 
 func jump():
-	character.velocity.y = jump_force
-	jump_time = 0.0
+	if get_input()["start_jump"]:
+		character.velocity.y = jump_force
+		jump_time = 0.0
+
 
 func jump_proces(delta: float) -> void:
 	if get_input()["jump"]:
@@ -100,5 +104,4 @@ func jump_proces(delta: float) -> void:
 		jump_time = 0.0
 
 func coyote_timer_proces(delta: float) -> void:
-	coyote_timer -= delta
-	print(coyote_timer)
+	coyote_timer += delta

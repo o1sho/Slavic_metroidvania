@@ -79,7 +79,7 @@ ui_attack={
 [physics]
 
 common/physics_ticks_per_second=165
-2d/default_gravity=1300.0
+2d/default_gravity=1400.0
 
 [rendering]
 

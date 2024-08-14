@@ -8,6 +8,8 @@ extends StateMachineState
 @export var _movement_core : MovementCore
 @onready var movement_core: MovementCore = _movement_core
 
+@export var _combat_core: CombatCore
+@onready var combat_core: CombatCore = _combat_core
 
 ## Timers
 #@export var jump_coyote : float = 0.08
@@ -32,10 +34,12 @@ func on_process(delta):
 	#State transitions
 	if movement_core.character.velocity.y > 0:
 		change_state("Fall")
-	if movement_core.character.is_on_floor():
+	elif movement_core.character.is_on_floor():
 		change_state("Idle")
-	if movement_core.get_input()["stop_jump"]:
+	elif movement_core.get_input()["stop_jump"]:
 		change_state("Fall")
+	elif combat_core.get_input()["attack"]:
+		change_state("Attack")
 
 # Called every physics frame when this state is active.
 func on_physics_process(delta):
