@@ -1,6 +1,5 @@
 [gd_scene load_steps=20 format=3 uid="uid://cnb7hhc5d748e"]
 
-[ext_resource type="Script" path="res://Scripts/Player/character_body_2d.gd" id="1_24t3m"]
 [ext_resource type="Texture2D" uid="uid://bw8qeg1ny6xsj" path="res://Sprites/Player_metroid.png" id="2_p1x0x"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="3_jftfb"]
 [ext_resource type="Script" path="res://Scripts/Player/States/Idle.gd" id="4_gcn08"]
@@ -10,6 +9,10 @@
 [ext_resource type="Script" path="res://Scripts/Player/Cores/MovementCore.gd" id="8_hhixm"]
 [ext_resource type="Script" path="res://Scripts/Player/States/Attack.gd" id="8_wboj8"]
 [ext_resource type="Script" path="res://Scripts/Player/Cores/CombatCore.gd" id="9_8nwql"]
+
+[sub_resource type="GDScript" id="GDScript_4hw0j"]
+script/source = "extends CharacterBody2D
+"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vv5hg"]
 radius = 6.0
@@ -76,8 +79,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_mi54a"]
 resource_name = "Idle"
-length = 0.45
+length = 0.65
 loop_mode = 1
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -85,7 +89,7 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
@@ -166,7 +170,7 @@ _data = {
 size = Vector2(13, 20)
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_24t3m")
+script = SubResource("GDScript_4hw0j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -7)
@@ -226,7 +230,7 @@ _movement_core = NodePath("../../Cores/MovementCore")
 script = ExtResource("8_hhixm")
 max_speed = 170.0
 acceleration = 1500.0
-jump_force = -200
+jump_force = -220
 max_jump_time = 0.16
 jump_boost = -13
 _character = NodePath("../..")
