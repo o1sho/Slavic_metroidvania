@@ -12,6 +12,7 @@
 
 [sub_resource type="GDScript" id="GDScript_4hw0j"]
 script/source = "extends CharacterBody2D
+
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vv5hg"]

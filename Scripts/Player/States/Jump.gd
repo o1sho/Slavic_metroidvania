@@ -23,7 +23,7 @@ extends StateMachineState
 
 # Called when the state machine enters this state.
 func on_enter():
-	print (state_machine.current_state)
+	#print (state_machine.current_state)
 	state_machine.animation_player.play("Jump")
 	movement_core.jump()
 	

@@ -9,7 +9,7 @@ extends StateMachineState
 # Called when the state machine enters this state.
 func on_enter():
 	state_machine.animation_player.play("Idle")
-	print(state_machine.current_state)
+	#print(state_machine.current_state)
 	movement_core.coyote_timer = 0
 
 # Called every frame when this state is active.
