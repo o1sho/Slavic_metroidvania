@@ -11,7 +11,13 @@ func _ready():
 	update_camera_zoom()
 
 func _process(delta):
-	position = player.position
+	if player != null:
+		position = player.position
+		#var movement_core = player.get_node("Cores/MovementCore") # путь к дочерней ноде внутри Player
+		#if movement_core != null:
+			#if movement_core.face_direction == 1:
+				#scale.x = 1 
+			#else: 1
 
 func _physics_process(delta):
 	pass

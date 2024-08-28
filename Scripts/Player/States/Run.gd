@@ -9,7 +9,7 @@ extends StateMachineState
 
 # Called when the state machine enters this state.
 func on_enter():
-	#print(state_machine.current_state)
+	print(state_machine.current_state)
 	state_machine.animation_player.play("Run")
 	movement_core.coyote_timer = 0
 

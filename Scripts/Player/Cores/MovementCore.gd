@@ -25,7 +25,7 @@ var x_dir := 1
 var jump_time = 0.0
 var coyote_timer = 0.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") 
-
+var gravity_works: bool = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -37,7 +37,7 @@ func _process(delta):
 	pass
 	
 func _physics_process(delta):
-	apply_gravity(delta)
+	if gravity_works: _apply_gravity(delta)
 	character.move_and_slide()
 	if !character.is_on_floor(): coyote_timer_proces(delta)
 	
@@ -50,7 +50,7 @@ func get_input() -> Dictionary:
 		"stop_jump": Input.is_action_just_released("jump") == true,
 	}
 
-func apply_gravity(delta: float) -> void:
+func _apply_gravity(delta: float) -> void:
 	character.velocity.y += gravity * delta
 
 func x_movement(delta: float) -> void:	

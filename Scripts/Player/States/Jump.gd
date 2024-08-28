@@ -23,7 +23,7 @@ extends StateMachineState
 
 # Called when the state machine enters this state.
 func on_enter():
-	#print (state_machine.current_state)
+	print (state_machine.current_state)
 	state_machine.animation_player.play("Jump")
 	movement_core.jump()
 	
@@ -36,10 +36,14 @@ func on_process(delta):
 		change_state("Fall")
 	elif movement_core.character.is_on_floor():
 		change_state("Idle")
-	elif movement_core.get_input()["stop_jump"]:
-		change_state("Fall")
+	elif !$"../../RayCast2DUp".is_colliding() and $"../../RayCast2DDown".is_colliding():
+		change_state("Climb")
+	#elif movement_core.get_input()["stop_jump"]:
+		#change_state("Fall")
 	elif combat_core.get_input()["attack"]:
 		change_state("Attack")
+
+
 
 # Called every physics frame when this state is active.
 func on_physics_process(delta):

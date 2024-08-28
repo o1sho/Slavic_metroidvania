@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cnb7hhc5d748e"]
+[gd_scene load_steps=21 format=3 uid="uid://cnb7hhc5d748e"]
 
 [ext_resource type="Texture2D" uid="uid://bw8qeg1ny6xsj" path="res://Sprites/Player_metroid.png" id="2_p1x0x"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="3_jftfb"]
@@ -9,10 +9,10 @@
 [ext_resource type="Script" path="res://Scripts/Player/Cores/MovementCore.gd" id="8_hhixm"]
 [ext_resource type="Script" path="res://Scripts/Player/States/Attack.gd" id="8_wboj8"]
 [ext_resource type="Script" path="res://Scripts/Player/Cores/CombatCore.gd" id="9_8nwql"]
+[ext_resource type="Script" path="res://Scripts/Player/States/Climb.gd" id="9_ecxdm"]
 
 [sub_resource type="GDScript" id="GDScript_4hw0j"]
 script/source = "extends CharacterBody2D
-
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vv5hg"]
@@ -172,6 +172,7 @@ size = Vector2(13, 20)
 
 [node name="Player" type="CharacterBody2D"]
 script = SubResource("GDScript_4hw0j")
+metadata/_edit_vertical_guides_ = [6.0]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -7)
@@ -225,14 +226,21 @@ _combat_core = NodePath("../../Cores/CombatCore")
 script = ExtResource("8_wboj8")
 _movement_core = NodePath("../../Cores/MovementCore")
 
+[node name="Climb" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("9_ecxdm")
+_movement_core = NodePath("../../Cores/MovementCore")
+
+[node name="Timer" type="Timer" parent="FiniteStateMachine/Climb"]
+one_shot = true
+
 [node name="Cores" type="Node2D" parent="."]
 
 [node name="MovementCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_character", "_animationPlayer")]
 script = ExtResource("8_hhixm")
-max_speed = 170.0
+max_speed = 190.0
 acceleration = 1500.0
-jump_force = -220
-max_jump_time = 0.16
+jump_force = -140
+max_jump_time = 0.15
 jump_boost = -13
 _character = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
@@ -241,3 +249,15 @@ _animationPlayer = NodePath("../../AnimationPlayer")
 script = ExtResource("9_8nwql")
 _character = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
+
+[node name="RayCast2DUp" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(6.1, 0)
+collision_mask = 2
+
+[node name="RayCast2DDown" type="RayCast2D" parent="."]
+position = Vector2(0, -4)
+target_position = Vector2(6.1, 0)
+collision_mask = 2
+
+[connection signal="timeout" from="FiniteStateMachine/Climb/Timer" to="FiniteStateMachine/Climb" method="_on_timer_timeout"]
