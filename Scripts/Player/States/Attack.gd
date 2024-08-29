@@ -3,15 +3,18 @@ extends StateMachineState
 @export var _movement_core : MovementCore
 @onready var movement_core: MovementCore = _movement_core
 
+@export var _combat_core : CombatCore
+@onready var combat_core: CombatCore = _combat_core
+
 var attack_finished: bool
-var can_jump: bool = false
+#var can_jump: bool = false
 
 # Called when the state machine enters this state.
 func on_enter():
 	state_machine.animation_player.play("Attack_sword")
 	attack_finished = false
 	print(state_machine.current_state)
-	can_jump = true
+	#can_jump = true
 
 # Called every frame when this state is active.
 func on_process(delta):

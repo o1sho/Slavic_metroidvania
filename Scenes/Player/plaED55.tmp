@@ -35,14 +35,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Cores/CombatCore/Weapon_Sword/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Cores/CombatCore/Weapon/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.28, 0.29),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.28, 0.29),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [false, false, true]
+"values": [true, false, false, true]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -126,7 +126,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Cores/CombatCore/Weapon_Sword/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Cores/CombatCore/Weapon/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -238,13 +238,13 @@ script = ExtResource("9_8nwql")
 _character = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
 
-[node name="Weapon_Sword" type="Area2D" parent="Cores/CombatCore" groups=["Weapons"]]
+[node name="Weapon" type="Area2D" parent="Cores/CombatCore" groups=["Weapon"]]
 position = Vector2(-1, 7)
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("11_eg310")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/CombatCore/Weapon_Sword"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/CombatCore/Weapon"]
 position = Vector2(15, -4)
 shape = SubResource("RectangleShape2D_44ug3")
 debug_color = Color(0.782151, 0.430882, 0.172665, 0.42)
