@@ -1,17 +1,18 @@
-[gd_scene load_steps=20 format=3 uid="uid://bf1w8c4n2n7eb"]
+[gd_scene load_steps=18 format=3 uid="uid://bf1w8c4n2n7eb"]
 
-[ext_resource type="Script" path="res://Scripts/Enemies/Enemy.gd" id="1_ba0of"]
 [ext_resource type="Script" path="res://Scripts/Enemies/BaseCore_Enemy.gd" id="1_bylge"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Cores/TakingDamageCore_Enemy.gd" id="2_tglsn"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Cores/DoingDamageCore_Enemy.gd" id="3_glg1l"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Cores/CharacteristicsCore_Enemy.gd" id="4_byd7f"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Cores/DeathCore_Enemy.gd" id="5_7hmla"]
 [ext_resource type="Script" path="res://Scripts/Enemies/Cores/MovementCore_Enemy.gd" id="6_lw0ct"]
-[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/state_machine_state.gd" id="6_ospij"]
 [ext_resource type="Texture2D" uid="uid://b8i3a4clpvguw" path="res://Sprites/Enemies/Enemie_Test/enemy_rpg.png" id="7_tp3qo"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="8_hlqw1"]
 [ext_resource type="Script" path="res://Scripts/Enemies/States/Patrol.gd" id="9_v4ebn"]
 [ext_resource type="Script" path="res://Scripts/Enemies/States/Chase.gd" id="10_wkvy4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pwxmm"]
+size = Vector2(32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gt2rx"]
 atlas = ExtResource("7_tp3qo")
@@ -56,61 +57,50 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pwxmm"]
-size = Vector2(16, 16)
-
 [node name="Enemy" type="RigidBody2D"]
 collision_layer = 4
 collision_mask = 11
-script = ExtResource("1_ba0of")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pwxmm")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Cores" type="Node2D" parent="."]
+script = ExtResource("1_bylge")
+
+[node name="CharacteristicsCore_Enemy" type="Node2D" parent="Cores"]
+script = ExtResource("4_byd7f")
+
+[node name="TakingDamageCore_Enemy" type="Node2D" parent="Cores"]
+script = ExtResource("2_tglsn")
+
+[node name="DoingDamageCore_Enemy" type="Node2D" parent="Cores"]
+script = ExtResource("3_glg1l")
+
+[node name="MovementCore_Enemy" type="Node2D" parent="Cores"]
+script = ExtResource("6_lw0ct")
+
+[node name="DeathCore_Enemy" type="Node2D" parent="Cores"]
+script = ExtResource("5_7hmla")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x3cp8")
 animation = &"Run"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_pwxmm")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(100, 0)
-
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("8_hlqw1")
-current_state = NodePath("Idle")
+current_state = NodePath("Patrol")
 
-[node name="Patrol" type="Node" parent="FiniteStateMachine"]
+[node name="Patrol" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("patrol_points")]
 script = ExtResource("9_v4ebn")
+patrol_points = [NodePath("../../PatrolPoints/Marker1"), NodePath("../../PatrolPoints/Marker2")]
 
 [node name="Chase" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("10_wkvy4")
 
-[node name="Idle" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("6_ospij")
+[node name="PatrolPoints" type="Node" parent="."]
 
-[node name="Cores" type="Node2D" parent="."]
-script = ExtResource("1_bylge")
+[node name="Marker1" type="Marker2D" parent="PatrolPoints"]
 
-[node name="CharacteristicsCore_Enemy" type="Node2D" parent="Cores" node_paths=PackedStringArray("_enemy", "_animation")]
-script = ExtResource("4_byd7f")
-_enemy = NodePath("../..")
-_animation = NodePath("../../AnimatedSprite2D")
-
-[node name="DoingDamageCore_Enemy" type="Node2D" parent="Cores" node_paths=PackedStringArray("_enemy", "_animation")]
-script = ExtResource("3_glg1l")
-_enemy = NodePath("../..")
-_animation = NodePath("../../AnimatedSprite2D")
-
-[node name="MovementCore_Enemy" type="Node2D" parent="Cores" node_paths=PackedStringArray("_enemy", "_animation")]
-script = ExtResource("6_lw0ct")
-_enemy = NodePath("../..")
-_animation = NodePath("../../AnimatedSprite2D")
-
-[node name="DeathCore_Enemy" type="Node2D" parent="Cores" node_paths=PackedStringArray("_enemy", "_animation")]
-script = ExtResource("5_7hmla")
-_enemy = NodePath("../..")
-_animation = NodePath("../../AnimatedSprite2D")
-
-[node name="TakingDamageCore_Enemy" type="Node2D" parent="Cores" node_paths=PackedStringArray("_enemy", "_animation")]
-script = ExtResource("2_tglsn")
-_enemy = NodePath("../..")
-_animation = NodePath("../../AnimatedSprite2D")
+[node name="Marker2" type="Marker2D" parent="PatrolPoints"]

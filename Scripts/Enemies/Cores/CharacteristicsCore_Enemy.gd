@@ -1,5 +1,5 @@
 class_name CharacteristicsCore_Enemy
-extends BaseCore
+extends BaseCore_Enemy
 
 @export var hp: int = 1
 

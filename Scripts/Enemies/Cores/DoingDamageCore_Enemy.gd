@@ -1,5 +1,5 @@
 class_name DoingDamageCore_Enemy
-extends Node2D
+extends BaseCore_Enemy
 
 
 # Called when the node enters the scene tree for the first time.

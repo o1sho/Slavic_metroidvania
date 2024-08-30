@@ -1,7 +1,7 @@
 class_name DeathCore_Enemy
-extends Node2D
+extends BaseCore_Enemy
 
 
 
 func _death():
-	$"../..".queue_free()
+	enemy.queue_free()

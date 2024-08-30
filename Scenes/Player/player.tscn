@@ -167,7 +167,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44ug3"]
 size = Vector2(13, 20)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 metadata/_edit_vertical_guides_ = [6.0]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
