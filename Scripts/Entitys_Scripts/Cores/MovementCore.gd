@@ -38,8 +38,8 @@ func _process(delta):
 	
 func _physics_process(delta):
 	if gravity_works: _apply_gravity(delta)
-	character.move_and_slide()
-	if !character.is_on_floor(): coyote_timer_proces(delta)
+	entity.move_and_slide()
+	if !entity.is_on_floor(): coyote_timer_proces(delta)
 	
 func get_input() -> Dictionary:
 	return {
@@ -51,27 +51,27 @@ func get_input() -> Dictionary:
 	}
 
 func _apply_gravity(delta: float) -> void:
-	character.velocity.y += gravity * delta
+	entity.velocity.y += gravity * delta
 
-func x_movement(delta: float) -> void:	
+func x_movement(delta: float, _x_dir: int) -> void:	
 	
-	x_dir = get_input()["x"]
+	x_dir = _x_dir
 	# Stop if we're not doing movement inputs.
 	if x_dir == 0: 
-		character.velocity.x = 0
+		entity.velocity.x = 0
 	
 	# If we are doing movement inputs and above max speed, don't accelerate nor decelerate
 	# Except if we are turning
 	# (This keeps our momentum gained from outside or slopes)
-	if abs(character.velocity.x) >= max_speed and sign(character.velocity.x) == x_dir:
+	if abs(entity.velocity.x) >= max_speed and sign(entity.velocity.x) == x_dir:
 		return
 	
 	# Are we turning?
 	# Deciding between acceleration and turn_acceleration
-	var accel_rate : float = acceleration if sign(character.velocity.x) == x_dir else turning_acceleration
+	var accel_rate : float = acceleration if sign(entity.velocity.x) == x_dir else turning_acceleration
 	
 	# Accelerate
-	character.velocity.x += x_dir * accel_rate * delta
+	entity.velocity.x += x_dir * accel_rate * delta
 	
 	#if !animationPlayer.current_animation == "Attack_sword":
 	set_direction(x_dir) # This is purely for visuals
@@ -82,13 +82,13 @@ func set_direction(hor_direction) -> void:
 	# To animate, only scale the sprite
 	if hor_direction == 0:
 		return
-	character.apply_scale(Vector2(hor_direction * face_direction, 1)) # flip
+	entity.apply_scale(Vector2(hor_direction * face_direction, 1)) # flip
 	face_direction = hor_direction # remember direction	
 
 
 func jump():
 	if get_input()["start_jump"]:
-		character.velocity.y = jump_force
+		entity.velocity.y = jump_force
 		jump_time = 0.0
 
 
@@ -97,7 +97,7 @@ func jump_proces(delta: float) -> void:
 		if jump_time < max_jump_time:
 			jump_time += delta
 			#print(jump_time)
-			character.velocity.y += jump_boost
+			entity.velocity.y += jump_boost
 			
 		
 	if get_input()["stop_jump"]:

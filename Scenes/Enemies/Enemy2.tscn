@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://yljwdj4su217"]
+
+[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="1_wnh0o"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Patrol.gd" id="2_px072"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Detection.gd" id="3_raq8t"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Search.gd" id="4_ejaqc"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/MovementCore.gd" id="5_affgs"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/PreparingForAttack.gd" id="5_x1uwh"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/GetDamageCore.gd" id="6_icryb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xu48"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rebly"]
+size = Vector2(13, 13)
+
+[node name="Enemy2" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AnimationEnemy" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Cores/MovementCore")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0xu48")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
+script = ExtResource("1_wnh0o")
+current_state = NodePath("Patrol")
+animation_player = NodePath("../AnimationEnemy")
+
+[node name="Patrol" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("2_px072")
+_movement_core = NodePath("../../Cores/MovementCore")
+
+[node name="Detection" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("3_raq8t")
+_movement_core = NodePath("../../Cores/MovementCore")
+
+[node name="Timer" type="Timer" parent="FiniteStateMachine/Detection"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Search" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("4_ejaqc")
+_movement_core = NodePath("../../Cores/MovementCore")
+
+[node name="Timer1" type="Timer" parent="FiniteStateMachine/Search"]
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="FiniteStateMachine/Search"]
+one_shot = true
+
+[node name="PreparingForAttack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("5_x1uwh")
+_movement_core = NodePath("../../Cores/MovementCore")
+
+[node name="Cores" type="Node2D" parent="."]
+
+[node name="MovementCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_entity", "_animationPlayer")]
+script = ExtResource("5_affgs")
+max_speed = 100.0
+_entity = NodePath("../..")
+_animationPlayer = NodePath("../../AnimationEnemy")
+
+[node name="GetDamageCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_entity", "_animationPlayer")]
+script = ExtResource("6_icryb")
+hp = 3
+_entity = NodePath("../..")
+_animationPlayer = NodePath("../../AnimationEnemy")
+
+[node name="HitBox" type="Area2D" parent="Cores/GetDamageCore" groups=["Damageable"]]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/GetDamageCore/HitBox"]
+shape = SubResource("RectangleShape2D_rebly")
+debug_color = Color(0.951543, 0.190632, 0.292418, 0.42)
+
+[node name="RayCast2D_WallFinder" type="RayCast2D" parent="."]
+position = Vector2(0, 5)
+target_position = Vector2(25, 0)
+collision_mask = 2
+
+[node name="RayCast2D_FloorFinder" type="RayCast2D" parent="."]
+position = Vector2(10, 10)
+target_position = Vector2(0, 2)
+collision_mask = 2
+
+[node name="RayCast2D_TargetFinder_F_near" type="RayCast2D" parent="."]
+target_position = Vector2(20, 0)
+
+[node name="RayCast2D_TargetFinder_F_far" type="RayCast2D" parent="."]
+target_position = Vector2(150, 0)
+
+[node name="RayCast2D_Targetinder_B" type="RayCast2D" parent="."]
+target_position = Vector2(-20, 0)
+
+[connection signal="timeout" from="FiniteStateMachine/Detection/Timer" to="FiniteStateMachine/Detection" method="_on_timer_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/Search/Timer1" to="FiniteStateMachine/Search" method="_on_timer_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/Search/Timer2" to="FiniteStateMachine/Search" method="_on_timer_2_timeout"]

@@ -8,6 +8,8 @@ extends Node2D
 @export var _animation: AnimatedSprite2D
 @onready var animation: AnimatedSprite2D = _animation
 
+var x_dir: int = 1
+
 func _ready() -> void:
 	_connect_weapon_player()
 

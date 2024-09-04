@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bpyo5y4aghxh7" path="res://Scenes/Environment/Statue/statue_2.tscn" id="4_temj5"]
 [ext_resource type="Script" path="res://Scripts/Camera/Camera2D.gd" id="5_7tyw7"]
 [ext_resource type="Script" path="res://Scripts/Debugin/#debuging.gd" id="7_lam83"]
-[ext_resource type="PackedScene" uid="uid://bf1w8c4n2n7eb" path="res://Scenes/Enemies/Dummy.tscn" id="8_fpio0"]
+[ext_resource type="PackedScene" uid="uid://yljwdj4su217" path="res://Scenes/Enemies/Enemy2.tscn" id="9_ydqxw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_scijq"]
 texture = ExtResource("2_rf1tn")
@@ -251,10 +251,6 @@ player = NodePath("../Player")
 true_width = 640.0
 true_height = 360.0
 
-[node name="Enemy" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("8_fpio0")]
-position = Vector2(384, -80)
-_player = NodePath("../Player")
-
 [node name="Player" parent="." instance=ExtResource("2_db4bw")]
 collision_mask = 262
 platform_floor_layers = 4278190082
@@ -307,3 +303,12 @@ debug_color = Color(0.592157, 0.541176, 0.2, 0.117647)
 
 [node name="#Debuging" type="Node2D" parent="."]
 script = ExtResource("7_lam83")
+
+[node name="Enemy2_1" parent="." instance=ExtResource("9_ydqxw")]
+position = Vector2(160, 96)
+
+[node name="Enemy2_2" parent="." instance=ExtResource("9_ydqxw")]
+position = Vector2(224, -32)
+
+[node name="Enemy2_3" parent="." instance=ExtResource("9_ydqxw")]
+position = Vector2(352, -64)

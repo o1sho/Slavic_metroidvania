@@ -20,13 +20,13 @@ func on_enter() -> void:
 
 # Called every frame when this state is active.
 func on_process(delta: float) -> void:
-	if movement_core.character.is_on_floor():
+	if movement_core.entity.is_on_floor():
 		state_machine.change_state("Idle")
 
 
 # Called every physics frame when this state is active.
 func on_physics_process(delta: float) -> void:
-	movement_core.character.velocity = Vector2(0, 0)
+	movement_core.entity.velocity = Vector2(0, 0)
 
 
 # Called when there is an input event while this state is active.
@@ -40,8 +40,8 @@ func on_exit() -> void:
 
 func _on_timer_timeout() -> void:
 	if movement_core.face_direction == 1:
-		movement_core.character.position.x += hor_dist_end_point
-		movement_core.character.position.y -= ver_dist_end_point
+		movement_core.entity.position.x += hor_dist_end_point
+		movement_core.entity.position.y -= ver_dist_end_point
 	elif movement_core.face_direction == -1: 
-		movement_core.character.position.x -= hor_dist_end_point
-		movement_core.character.position.y -= ver_dist_end_point
+		movement_core.entity.position.x -= hor_dist_end_point
+		movement_core.entity.position.y -= ver_dist_end_point

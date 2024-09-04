@@ -1,16 +1,18 @@
-[gd_scene load_steps=21 format=3 uid="uid://cnb7hhc5d748e"]
+[gd_scene load_steps=24 format=3 uid="uid://cnb7hhc5d748e"]
 
 [ext_resource type="Texture2D" uid="uid://bw8qeg1ny6xsj" path="res://Sprites/Player_metroid.png" id="2_p1x0x"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Idle.gd" id="3_eddb0"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="3_jftfb"]
-[ext_resource type="Script" path="res://Scripts/Player/States/Idle.gd" id="4_gcn08"]
-[ext_resource type="Script" path="res://Scripts/Player/States/Run.gd" id="5_sy3p3"]
-[ext_resource type="Script" path="res://Scripts/Player/States/Jump.gd" id="6_twp1d"]
-[ext_resource type="Script" path="res://Scripts/Player/States/Fall.gd" id="7_twop4"]
-[ext_resource type="Script" path="res://Scripts/Player/Cores/MovementCore.gd" id="8_hhixm"]
-[ext_resource type="Script" path="res://Scripts/Player/States/Attack.gd" id="8_wboj8"]
-[ext_resource type="Script" path="res://Scripts/Player/Cores/CombatCore.gd" id="9_8nwql"]
-[ext_resource type="Script" path="res://Scripts/Player/States/Climb.gd" id="9_ecxdm"]
-[ext_resource type="Script" path="res://Scripts/Player/Weapon/Weapon.gd" id="11_eg310"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Run.gd" id="4_k4fw0"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Jump.gd" id="5_joewv"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Fall.gd" id="6_bev77"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Attack.gd" id="7_060oi"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Climb.gd" id="8_8kie6"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/MovementCore.gd" id="9_cvmch"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/DealDamageCore.gd" id="10_82vb7"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/Weapon/Weapon.gd" id="11_rnlb2"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/GetDamageCore.gd" id="12_wc0m5"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/DeathCore.gd" id="14_aos8n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vv5hg"]
 radius = 6.0
@@ -35,7 +37,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Cores/CombatCore/Weapon_Sword/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Cores/DealDamageCore/Weapon_Sword/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -126,7 +128,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Cores/CombatCore/Weapon_Sword/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Cores/DealDamageCore/Weapon_Sword/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -167,6 +169,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44ug3"]
 size = Vector2(13, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tr02n"]
+size = Vector2(11, 23)
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 metadata/_edit_vertical_guides_ = [6.0]
 
@@ -190,32 +195,33 @@ script = ExtResource("3_jftfb")
 current_state = NodePath("Fall")
 animation_player = NodePath("../AnimationPlayer")
 
-[node name="Idle" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_combat_core")]
-script = ExtResource("4_gcn08")
+[node name="Idle" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+script = ExtResource("3_eddb0")
 _movement_core = NodePath("../../Cores/MovementCore")
-_combat_core = NodePath("../../Cores/CombatCore")
+_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Run" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_combat_core")]
-script = ExtResource("5_sy3p3")
+[node name="Run" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+script = ExtResource("4_k4fw0")
 _movement_core = NodePath("../../Cores/MovementCore")
-_combat_core = NodePath("../../Cores/CombatCore")
+_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Jump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_combat_core")]
-script = ExtResource("6_twp1d")
+[node name="Jump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+script = ExtResource("5_joewv")
 _movement_core = NodePath("../../Cores/MovementCore")
-_combat_core = NodePath("../../Cores/CombatCore")
+_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Fall" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_combat_core")]
-script = ExtResource("7_twop4")
+[node name="Fall" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+script = ExtResource("6_bev77")
 _movement_core = NodePath("../../Cores/MovementCore")
-_combat_core = NodePath("../../Cores/CombatCore")
+_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
-script = ExtResource("8_wboj8")
+[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+script = ExtResource("7_060oi")
 _movement_core = NodePath("../../Cores/MovementCore")
+_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
 [node name="Climb" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
-script = ExtResource("9_ecxdm")
+script = ExtResource("8_8kie6")
 _movement_core = NodePath("../../Cores/MovementCore")
 
 [node name="Timer" type="Timer" parent="FiniteStateMachine/Climb"]
@@ -223,31 +229,51 @@ one_shot = true
 
 [node name="Cores" type="Node2D" parent="."]
 
-[node name="MovementCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_character", "_animationPlayer")]
-script = ExtResource("8_hhixm")
+[node name="MovementCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_entity", "_animationPlayer")]
+script = ExtResource("9_cvmch")
 max_speed = 190.0
 acceleration = 1500.0
 jump_force = -140
 max_jump_time = 0.15
 jump_boost = -13
-_character = NodePath("../..")
+_entity = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
 
-[node name="CombatCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_character", "_animationPlayer")]
-script = ExtResource("9_8nwql")
-_character = NodePath("../..")
+[node name="DealDamageCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_weapon", "_entity", "_animationPlayer")]
+script = ExtResource("10_82vb7")
+_weapon = NodePath("Weapon_Sword")
+_entity = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
 
-[node name="Weapon_Sword" type="Area2D" parent="Cores/CombatCore" groups=["Weapons"]]
+[node name="Weapon_Sword" type="Area2D" parent="Cores/DealDamageCore" groups=["Weapons"]]
 position = Vector2(-1, 7)
 collision_layer = 8
-collision_mask = 4
-script = ExtResource("11_eg310")
+collision_mask = 16
+script = ExtResource("11_rnlb2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/CombatCore/Weapon_Sword"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/DealDamageCore/Weapon_Sword"]
 position = Vector2(15, -4)
 shape = SubResource("RectangleShape2D_44ug3")
 debug_color = Color(0.782151, 0.430882, 0.172665, 0.42)
+
+[node name="GetDamageCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_entity", "_animationPlayer")]
+script = ExtResource("12_wc0m5")
+_entity = NodePath("../..")
+_animationPlayer = NodePath("../../AnimationPlayer")
+
+[node name="HitBox" type="Area2D" parent="Cores/GetDamageCore"]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/GetDamageCore/HitBox"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_tr02n")
+debug_color = Color(0.930342, 0.256059, 0.165255, 0.42)
+
+[node name="DeathCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_entity", "_animationPlayer")]
+script = ExtResource("14_aos8n")
+_entity = NodePath("../..")
+_animationPlayer = NodePath("../../AnimationPlayer")
 
 [node name="RayCast2DUp" type="RayCast2D" parent="."]
 position = Vector2(0, -5)
