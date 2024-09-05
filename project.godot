@@ -30,6 +30,7 @@ enabled=PackedStringArray("res://addons/finite_state_machine/plugin.cfg")
 
 Damageable=""
 Player=""
+Weapons=""
 
 [input]
 

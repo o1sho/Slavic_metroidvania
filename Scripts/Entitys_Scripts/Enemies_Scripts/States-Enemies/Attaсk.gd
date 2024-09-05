@@ -1,4 +1,4 @@
-class_name PreparingForAttack
+class_name Attack
 extends StateMachineState
 
 @export var _movement_core : MovementCore
@@ -10,27 +10,18 @@ extends StateMachineState
 # Called when the state machine enters this state.
 func on_enter() -> void:
 	print($"../..".name, " has changed the state to ", name)
-	state_machine.animation_player.play("Patrol")
+	state_machine.animation_player.play("Attack")
+	movement_core.entity.velocity.x = 0
 
 
 # Called every frame when this state is active.
 func on_process(delta: float) -> void:
-
-	if get_damage_core.attack:
-		state_machine.change_state("Stunning")
-	elif !$"../../RayCast2D_TargetFinder_F_far".is_colliding():
-		state_machine.change_state("Search")
-	elif $"../../RayCast2D_TargetFinder_F_near".is_colliding():
-		state_machine.change_state("Attack")
-		
+	pass
 
 
 # Called every physics frame when this state is active.
 func on_physics_process(delta: float) -> void:
-	if $"../../RayCast2D_TargetFinder_F_far".is_colliding() and !$"../../RayCast2D_TargetFinder_F_near".is_colliding():
-		movement_core.x_movement(delta * 3, movement_core.face_direction)
-	elif $"../../RayCast2D_TargetFinder_F_near".is_colliding():
-		movement_core.entity.velocity.x = 0
+	pass
 
 
 # Called when there is an input event while this state is active.

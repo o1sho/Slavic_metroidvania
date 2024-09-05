@@ -27,14 +27,6 @@ var coyote_timer = 0.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") 
 var gravity_works: bool = true
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
 func _physics_process(delta):
 	if gravity_works: _apply_gravity(delta)

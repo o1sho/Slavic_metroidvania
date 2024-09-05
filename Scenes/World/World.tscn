@@ -251,10 +251,6 @@ player = NodePath("../Player")
 true_width = 640.0
 true_height = 360.0
 
-[node name="Player" parent="." instance=ExtResource("2_db4bw")]
-collision_mask = 262
-platform_floor_layers = 4278190082
-
 [node name="Environment" type="Node2D" parent="."]
 visible = false
 
@@ -312,3 +308,7 @@ position = Vector2(224, -32)
 
 [node name="Enemy2_3" parent="." instance=ExtResource("9_ydqxw")]
 position = Vector2(352, -64)
+
+[node name="Player" parent="." instance=ExtResource("2_db4bw")]
+collision_mask = 262
+platform_floor_layers = 4278190082

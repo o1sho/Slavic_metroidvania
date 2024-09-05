@@ -1,5 +1,5 @@
-class_name Weapon
 extends Area2D
+
 
 @export var amount_of_damage: float = 1
 @export var push_direction: Vector2

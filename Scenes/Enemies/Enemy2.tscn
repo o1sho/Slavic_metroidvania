@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://yljwdj4su217"]
+[gd_scene load_steps=23 format=3 uid="uid://yljwdj4su217"]
 
+[ext_resource type="Texture2D" uid="uid://b8i3a4clpvguw" path="res://Sprites/Enemies/Enemie_Test/enemy_rpg.png" id="1_wchlb"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="1_wnh0o"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Patrol.gd" id="2_px072"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Detection.gd" id="3_raq8t"]
@@ -7,22 +8,187 @@
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/MovementCore.gd" id="5_affgs"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/PreparingForAttack.gd" id="5_x1uwh"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/GetDamageCore.gd" id="6_icryb"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Attaсk.gd" id="7_f8kjt"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/States-Enemies/Stunning.gd" id="8_r1eh1"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/DealDamageCore.gd" id="10_6xolj"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Enemies_Scripts/Weapons/Weapon.gd" id="11_frt4e"]
+
+[sub_resource type="Animation" id="Animation_yk2x5"]
+resource_name = "Attack"
+length = 0.32
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, -2), Vector2(0, 2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../DealDamageCore/Weapon/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_jg77q"]
+resource_name = "Detection"
+length = 0.02
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_oqh8x"]
+resource_name = "Patrol"
+length = 0.25
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_y8gqo"]
+resource_name = "PreparingForAttack"
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_5rte6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../DealDamageCore/Weapon/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_auobp"]
+resource_name = "Search"
+length = 0.02
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w3i3n"]
+_data = {
+"Attack": SubResource("Animation_yk2x5"),
+"Detection": SubResource("Animation_jg77q"),
+"Patrol": SubResource("Animation_oqh8x"),
+"PreparingForAttack": SubResource("Animation_y8gqo"),
+"RESET": SubResource("Animation_5rte6"),
+"Search": SubResource("Animation_auobp")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xu48"]
+size = Vector2(15, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rebly"]
-size = Vector2(13, 13)
+size = Vector2(13, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wwalq"]
+size = Vector2(8, 15)
 
 [node name="Enemy2" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+texture = ExtResource("1_wchlb")
+hframes = 5
+vframes = 4
+frame = 5
 
 [node name="AnimationEnemy" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Cores/MovementCore")
+libraries = {
+"": SubResource("AnimationLibrary_w3i3n")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_0xu48")
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
@@ -30,31 +196,49 @@ script = ExtResource("1_wnh0o")
 current_state = NodePath("Patrol")
 animation_player = NodePath("../AnimationEnemy")
 
-[node name="Patrol" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+[node name="Patrol" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_get_damage_core")]
 script = ExtResource("2_px072")
 _movement_core = NodePath("../../Cores/MovementCore")
+_get_damage_core = NodePath("../../Cores/GetDamageCore")
 
-[node name="Detection" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+[node name="Detection" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_get_damage_core")]
 script = ExtResource("3_raq8t")
 _movement_core = NodePath("../../Cores/MovementCore")
+_get_damage_core = NodePath("../../Cores/GetDamageCore")
 
 [node name="Timer" type="Timer" parent="FiniteStateMachine/Detection"]
+wait_time = 0.7
+one_shot = true
+
+[node name="Search" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_get_damage_core")]
+script = ExtResource("4_ejaqc")
+_movement_core = NodePath("../../Cores/MovementCore")
+_get_damage_core = NodePath("../../Cores/GetDamageCore")
+
+[node name="Timer1" type="Timer" parent="FiniteStateMachine/Search"]
 wait_time = 0.5
 one_shot = true
 
-[node name="Search" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
-script = ExtResource("4_ejaqc")
-_movement_core = NodePath("../../Cores/MovementCore")
-
-[node name="Timer1" type="Timer" parent="FiniteStateMachine/Search"]
-one_shot = true
-
 [node name="Timer2" type="Timer" parent="FiniteStateMachine/Search"]
+wait_time = 0.5
 one_shot = true
 
-[node name="PreparingForAttack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+[node name="PreparingForAttack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_get_damage_core")]
 script = ExtResource("5_x1uwh")
 _movement_core = NodePath("../../Cores/MovementCore")
+_get_damage_core = NodePath("../../Cores/GetDamageCore")
+
+[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_get_damage_core")]
+script = ExtResource("7_f8kjt")
+_movement_core = NodePath("../../Cores/MovementCore")
+_get_damage_core = NodePath("../../Cores/GetDamageCore")
+
+[node name="Stunning" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("8_r1eh1")
+_movement_core = NodePath("../../Cores/MovementCore")
+
+[node name="Timer" type="Timer" parent="FiniteStateMachine/Stunning"]
+one_shot = true
 
 [node name="Cores" type="Node2D" parent="."]
 
@@ -75,21 +259,40 @@ collision_layer = 16
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/GetDamageCore/HitBox"]
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_rebly")
 debug_color = Color(0.951543, 0.190632, 0.292418, 0.42)
 
+[node name="DealDamageCore" type="Node2D" parent="Cores" node_paths=PackedStringArray("_weapon", "_entity", "_animationPlayer")]
+script = ExtResource("10_6xolj")
+_weapon = NodePath("Weapon")
+_entity = NodePath("../..")
+_animationPlayer = NodePath("../../AnimationEnemy")
+
+[node name="Weapon" type="Area2D" parent="Cores/DealDamageCore" groups=["Weapons"]]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("11_frt4e")
+push_direction = Vector2(0, -1)
+push_power = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/DealDamageCore/Weapon"]
+position = Vector2(16, -2)
+shape = SubResource("RectangleShape2D_wwalq")
+debug_color = Color(0.937095, 0.239708, 0.19763, 0.42)
+
 [node name="RayCast2D_WallFinder" type="RayCast2D" parent="."]
 position = Vector2(0, 5)
-target_position = Vector2(25, 0)
+target_position = Vector2(15, 0)
 collision_mask = 2
 
 [node name="RayCast2D_FloorFinder" type="RayCast2D" parent="."]
-position = Vector2(10, 10)
+position = Vector2(6, 10)
 target_position = Vector2(0, 2)
 collision_mask = 2
 
 [node name="RayCast2D_TargetFinder_F_near" type="RayCast2D" parent="."]
-target_position = Vector2(20, 0)
+target_position = Vector2(9, 0)
 
 [node name="RayCast2D_TargetFinder_F_far" type="RayCast2D" parent="."]
 target_position = Vector2(150, 0)
@@ -100,3 +303,4 @@ target_position = Vector2(-20, 0)
 [connection signal="timeout" from="FiniteStateMachine/Detection/Timer" to="FiniteStateMachine/Detection" method="_on_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Search/Timer1" to="FiniteStateMachine/Search" method="_on_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Search/Timer2" to="FiniteStateMachine/Search" method="_on_timer_2_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/Stunning/Timer" to="FiniteStateMachine/Stunning" method="_on_timer_timeout"]

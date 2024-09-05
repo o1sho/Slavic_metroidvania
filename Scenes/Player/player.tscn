@@ -250,6 +250,8 @@ position = Vector2(-1, 7)
 collision_layer = 8
 collision_mask = 16
 script = ExtResource("11_rnlb2")
+push_direction = Vector2(0, -10)
+push_power = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cores/DealDamageCore/Weapon_Sword"]
 position = Vector2(15, -4)
@@ -261,7 +263,7 @@ script = ExtResource("12_wc0m5")
 _entity = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
 
-[node name="HitBox" type="Area2D" parent="Cores/GetDamageCore"]
+[node name="HitBox" type="Area2D" parent="Cores/GetDamageCore" groups=["Damageable"]]
 collision_layer = 16
 collision_mask = 8
 
