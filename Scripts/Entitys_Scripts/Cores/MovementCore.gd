@@ -77,6 +77,9 @@ func set_direction(hor_direction) -> void:
 	entity.apply_scale(Vector2(hor_direction * face_direction, 1)) # flip
 	face_direction = hor_direction # remember direction	
 
+func jump_simple():
+		entity.velocity.y = jump_force
+		jump_time = 0.0
 
 func jump():
 	if get_input()["start_jump"]:

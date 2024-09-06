@@ -304,10 +304,7 @@ script = ExtResource("7_lam83")
 position = Vector2(160, 96)
 
 [node name="Enemy2_2" parent="." instance=ExtResource("9_ydqxw")]
-position = Vector2(224, -32)
-
-[node name="Enemy2_3" parent="." instance=ExtResource("9_ydqxw")]
-position = Vector2(352, -64)
+position = Vector2(208, -32)
 
 [node name="Player" parent="." instance=ExtResource("2_db4bw")]
 collision_mask = 262
