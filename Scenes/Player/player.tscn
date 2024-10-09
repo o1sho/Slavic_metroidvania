@@ -236,6 +236,7 @@ acceleration = 1500.0
 jump_force = -140
 max_jump_time = 0.15
 jump_boost = -13
+jump_count = 2
 _entity = NodePath("../..")
 _animationPlayer = NodePath("../../AnimationPlayer")
 

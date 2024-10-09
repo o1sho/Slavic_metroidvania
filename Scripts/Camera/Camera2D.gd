@@ -3,8 +3,8 @@ extends Camera2D
 @export var player: CharacterBody2D
 var current_area: Area2D = null
 
-@export var true_width: float = 512  # Желаемая ширина области видимости в пикселях
-@export var true_height: float = 288 # Желаемая высота области видимости в пикселях
+@export var true_width: float = 640  # Желаемая ширина области видимости в пикселях
+@export var true_height: float = 360 # Желаемая высота области видимости в пикселях
 
 func _ready():
 	сonnectAllAreas()

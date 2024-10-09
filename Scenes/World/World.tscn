@@ -248,8 +248,6 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource("5_7tyw7")
 player = NodePath("../Player")
-true_width = 640.0
-true_height = 360.0
 
 [node name="Environment" type="Node2D" parent="."]
 visible = false

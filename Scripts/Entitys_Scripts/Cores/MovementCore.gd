@@ -21,11 +21,13 @@ var x_dir := 1
 @export var max_jump_time = 0.5  # Максимальное время, в течение которого можно удерживать кнопку прыжка
 @export var jump_boost = 2  # Коэффициент увеличения высоты прыжка при удержании
 @export var coyote_time = 0.1  # Время на прыжок после ухода с платформы
+@export var jump_count = 1
 
 var jump_time = 0.0
 var coyote_timer = 0.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") 
 var gravity_works: bool = true
+var count_of_jumps = 0.0
 
 	
 func _physics_process(delta):
@@ -85,6 +87,7 @@ func jump():
 	if get_input()["start_jump"]:
 		entity.velocity.y = jump_force
 		jump_time = 0.0
+		
 
 
 func jump_proces(delta: float) -> void:
@@ -96,7 +99,11 @@ func jump_proces(delta: float) -> void:
 			
 		
 	if get_input()["stop_jump"]:
-		jump_time = 0.0
+		count_of_jumps += 1
 
 func coyote_timer_proces(delta: float) -> void:
 	coyote_timer += delta
+
+func jump_reset() -> void:
+	count_of_jumps = 0
+	

@@ -57,4 +57,5 @@ func on_input(event: InputEvent):
 
 # Called when the state machine exits this state.
 func on_exit():
-	pass
+	movement_core.jump_reset()
+	movement_core.jump_time = 0.0
