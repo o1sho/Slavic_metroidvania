@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://thxhyf3xlao1"]
+
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Climb.gd" id="1_2rgpv"]
+
+[node name="Climb" type="Node" node_paths=PackedStringArray("_movement_core")]
+script = ExtResource("1_2rgpv")
+_movement_core = NodePath("")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

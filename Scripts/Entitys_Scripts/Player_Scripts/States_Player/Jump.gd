@@ -5,11 +5,9 @@ extends StateMachineState
 ## Reference to the character node.
 #@onready var character: CharacterBody2D = get_node(_character)
 
-@export var _movement_core : MovementCore
-@onready var movement_core: MovementCore = _movement_core
+@onready var movement_core: MovementCore = get_node_or_null("../../Cores/MovementCore")
 
-@export var _deal_damage_core: DealDamageCore
-@onready var deal_damage_core: DealDamageCore = _deal_damage_core
+@onready var deal_damage_core: DealDamageCore = get_node_or_null("../../Cores/DealDamageCore")
 
 ## Timers
 #@export var jump_coyote : float = 0.08
@@ -36,7 +34,7 @@ func on_process(delta):
 		change_state("Fall")
 	elif movement_core.entity.is_on_floor():
 		change_state("Idle")
-	elif !$"../../RayCast2DUp".is_colliding() and $"../../RayCast2DDown".is_colliding():
+	elif !$"../../RayCast2DUp".is_colliding() and $"../../RayCast2DDown".is_colliding() and movement_core.get_input()["x"]:
 		change_state("Climb")
 	#elif movement_core.get_input()["stop_jump"]:
 		#change_state("Fall")

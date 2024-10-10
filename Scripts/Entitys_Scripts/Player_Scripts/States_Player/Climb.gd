@@ -3,8 +3,7 @@ extends StateMachineState
 @export var hor_dist_end_point = 15
 @export var ver_dist_end_point = 15
 
-@export var _movement_core : MovementCore
-@onready var movement_core: MovementCore = _movement_core
+@onready var movement_core: MovementCore = get_node_or_null("../../Cores/MovementCore")
 
 @onready var ray_cast_up: RayCast2D = $"../../RayCast2DUp"
 @onready var ray_cast_down: RayCast2D = $"../../RayCast2DDown"

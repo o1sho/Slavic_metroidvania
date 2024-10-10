@@ -1,10 +1,8 @@
 extends StateMachineState
 
-@export var _movement_core : MovementCore
-@onready var movement_core: MovementCore = _movement_core
+@onready var movement_core: MovementCore = get_node_or_null("../../Cores/MovementCore")
 
-@export var _deal_damage_core: DealDamageCore
-@onready var deal_damage_core: DealDamageCore = _deal_damage_core
+@onready var deal_damage_core: DealDamageCore = get_node_or_null("../../Cores/DealDamageCore")
 
 # Called when the state machine enters this state.
 func on_enter():
@@ -23,7 +21,7 @@ func on_process(delta):
 		change_state("Jump")
 	elif deal_damage_core.get_input()["attack"]:
 		change_state("Attack")
-	elif !$"../../RayCast2DUp".is_colliding() and $"../../RayCast2DDown".is_colliding():
+	elif !$"../../RayCast2DUp".is_colliding() and $"../../RayCast2DDown".is_colliding() and movement_core.get_input()["x"]:
 		change_state("Climb")
 
 

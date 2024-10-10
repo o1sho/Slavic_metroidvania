@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cnb7hhc5d748e"]
+[gd_scene load_steps=25 format=3 uid="uid://cnb7hhc5d748e"]
 
 [ext_resource type="Texture2D" uid="uid://bw8qeg1ny6xsj" path="res://Sprites/Player_metroid.png" id="2_p1x0x"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Idle.gd" id="3_eddb0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Attack.gd" id="7_060oi"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/Climb.gd" id="8_8kie6"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/MovementCore.gd" id="9_cvmch"]
+[ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/States_Player/StatesController.gd" id="9_ql4sm"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/DealDamageCore.gd" id="10_82vb7"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Player_Scripts/Weapon/Weapon.gd" id="11_rnlb2"]
 [ext_resource type="Script" path="res://Scripts/Entitys_Scripts/Cores/GetDamageCore.gd" id="12_wc0m5"]
@@ -195,37 +196,29 @@ script = ExtResource("3_jftfb")
 current_state = NodePath("Fall")
 animation_player = NodePath("../AnimationPlayer")
 
-[node name="Idle" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("3_eddb0")
-_movement_core = NodePath("../../Cores/MovementCore")
-_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Run" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+[node name="Run" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("4_k4fw0")
-_movement_core = NodePath("../../Cores/MovementCore")
-_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Jump" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+[node name="Jump" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("5_joewv")
-_movement_core = NodePath("../../Cores/MovementCore")
-_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Fall" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+[node name="Fall" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("6_bev77")
-_movement_core = NodePath("../../Cores/MovementCore")
-_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core", "_deal_damage_core")]
+[node name="Attack" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("7_060oi")
-_movement_core = NodePath("../../Cores/MovementCore")
-_deal_damage_core = NodePath("../../Cores/DealDamageCore")
 
-[node name="Climb" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_movement_core")]
+[node name="Climb" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("8_8kie6")
-_movement_core = NodePath("../../Cores/MovementCore")
 
 [node name="Timer" type="Timer" parent="FiniteStateMachine/Climb"]
 one_shot = true
+
+[node name="StatesController" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_ql4sm")
 
 [node name="Cores" type="Node2D" parent="."]
 

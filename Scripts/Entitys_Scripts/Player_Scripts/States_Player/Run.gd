@@ -1,10 +1,8 @@
 extends StateMachineState
 
-@export var _movement_core : MovementCore
-@onready var movement_core: MovementCore = _movement_core
+@onready var movement_core: MovementCore = get_node_or_null("../../Cores/MovementCore")
 
-@export var _deal_damage_core: DealDamageCore
-@onready var deal_damage_core: DealDamageCore = _deal_damage_core
+@onready var deal_damage_core: DealDamageCore = get_node_or_null("../../Cores/DealDamageCore")
 
 
 # Called when the state machine enters this state.
