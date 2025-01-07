@@ -241,13 +241,16 @@ tile_set = SubResource("TileSet_ani45")
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
-drag_vertical_enabled = true
-drag_top_margin = 0.1
-drag_bottom_margin = 0.1
+drag_left_margin = 0.02
+drag_top_margin = 0.01
+drag_right_margin = 0.02
+drag_bottom_margin = 0.01
 editor_draw_limits = true
 editor_draw_drag_margin = true
 script = ExtResource("5_7tyw7")
 player = NodePath("../Player")
+look_ahead_distance = 65.0
+smooth_factor = 0.015
 
 [node name="Environment" type="Node2D" parent="."]
 visible = false

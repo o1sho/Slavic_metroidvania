@@ -18,7 +18,7 @@ func on_process(delta):
 		change_state("Fall")
 	elif movement_core.get_input()["start_jump"] and movement_core.entity.is_on_floor():
 		change_state("Jump")
-	elif movement_core.get_input()["x"] or movement_core.get_input()["y"]:
+	elif movement_core.get_input()["x"]:
 		change_state("Run")
 	elif deal_damage_core.get_input()["attack"]:
 		change_state("Attack")
